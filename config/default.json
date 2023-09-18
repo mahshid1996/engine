@@ -1,0 +1,34 @@
+{
+    "db": {
+        "url": "mongodb://localhost:27017/drmDB"
+    },
+    "server": {
+        "host": "localhost",
+        "port": 3030
+    },
+    "camunda": {
+        "url": "http://localhost:8080",
+        "engineTenant": "DRM"
+    },
+    "kafka": {
+        "brokers": "localhost:9092",
+        "topics": "logicalResourceCreateEvent,logicalResourceRemoveEvent,logicalResourcePatchEvent",
+        "groupId": "drm-engine-local-kafka2"
+    },
+    "loggerLevel": "info",
+    "inventory": {
+        "gRPCService": "0.0.0.0:30307"
+    },
+    "drmApi": {
+        "url": "http://localhost:3031"
+    },
+    "recycling": {
+        "required": "Yes",
+        "interval": 20000,
+        "units": "MS",
+        "longInterval": 60000
+    },
+    "jwt": {
+        "secret": "sjtkca03keepfiring46br¤£@62,"
+    }
+}

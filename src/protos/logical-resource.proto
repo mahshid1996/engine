@@ -1,0 +1,760 @@
+syntax = "proto3";
+import "google/protobuf/any.proto";
+
+package protos;
+
+//Empty message   
+message Empty { }
+//just for request payload of patch method
+message PatchLogicalResourceMessage{
+    // Unique identifier of the LogicalResourceMessage task 
+    string id = 1;
+
+    // href of the LogicalResourceMessage task  
+    string href = 2;
+
+    // description of the LogicalResourceMessage task 
+    string description = 3;
+
+    // name of of the LogicalResourceMessage task 
+    string name = 4;
+
+    // resourceVersion of the LogicalResourceMessage task 
+    int64 resourceVersion = 5;
+
+    // @type of the LogicalResourceMessage task 
+    string type = 6[json_name = "@type"];
+
+    // @baseType of the LogicalResourceMessage task 
+    string baseType = 7[json_name = "@baseType"];
+
+    // @schemaLocation of the LogicalResourceMessage task 
+    string schemaLocation = 8[json_name = "@schemaLocation"];
+
+    // isBundle of the LogicalResourceMessage task 
+    string isBundle = 28 ;
+
+    // isMNP of the LogicalResourceMessage task 
+    string isMNP = 30 ;
+
+    // resourceAccess of the LogicalResourceMessage task 
+    string resourceAccess = 32[ json_name = "resourceAccess"];
+
+    // startOperatingDate of the LogicalResourceMessage task 
+    string startOperatingDate = 9[ json_name = "startOperatingDate"];
+
+    // endOperatingDate of the LogicalResourceMessage task  
+    string endOperatingDate = 10;
+
+    // resourceRecycleDate of the LogicalResourceMessage task 
+    string resourceRecycleDate = 31;
+
+    // operationalState of the LogicalResourceMessage task  
+    string operationalState = 11;
+
+    // value of the LogicalResourceMessage task 
+    string value = 27;
+
+    // resourceStatus of the LogicalResourceMessage task  
+    enum ResourceStatus {
+        Created = 1;
+        Available = 2;
+        Reserved = 3;
+        InUse = 4;
+        Retired = 5;
+        Disabled = 6; 
+        Pooled =7;
+        Blocked=8;
+    }
+    string resourceStatus= 26;
+    
+    // BusinessType of the LogicalResourceMessage task  
+    repeated string businessType = 12;
+
+     // Category of the LogicalResourceMessage task 
+     repeated string category = 13;
+
+    // cost of the LogicalResourceMessage task  
+    message Cost{
+        int64 taxFreeValue = 1;
+        int64 taxedValue = 2;
+        string unit = 3;
+    }
+    Cost cost = 14 ;
+
+    // Attachment of the LogicalResourceMessage task  
+    message Attachment{
+        string id = 1 ;
+        string href = 2;
+        string attachmentType = 3;
+        string content = 4;
+        string description = 5;
+        string mimeType = 6;
+        string name = 7;
+        string url = 8;
+        message Size{
+            string amount = 1;
+            string units = 2;
+        }
+        Size size = 9 [json_name = "size"];
+        message ValidFor{
+          string startDateTime = 1;
+          string endDateTime = 2;
+        }
+        ValidFor validFor = 10 [json_name = "validFor"];
+        string baseType = 11[json_name = "@baseType"];
+        string type = 12[json_name = "@type"];
+        string schemaLocation = 13[json_name = "@schemaLocation"];
+        string referredType = 14[json_name = "@referredType"];
+    }
+    repeated Attachment attachment = 15;
+
+    // Note of the LogicalResourceMessage task 
+    message Note{
+        string authorRole = 1;
+        string author = 2;
+        string date = 3;
+        string  text = 4;
+    }
+    repeated Note note = 16  ;
+
+    // place of the LogicalResourceMessage task 
+    repeated string place = 17 ;
+
+    // RelatedParty of the LogicalResourceMessage task 
+    message RelatedParty{
+        string name = 1;
+        string role = 2;
+        string type = 3[json_name = "@type"];
+        string baseType = 4[json_name = "@baseType"];
+    }
+    repeated RelatedParty relatedParty = 18 ;
+
+    // ResourceCharacteristic of the LogicalResourceMessage task 
+    message ResourceCharacteristic{
+        string code = 1;
+        string name = 2;
+        bool publicIdentifier = 3;
+        string value = 4;
+        string valueType = 5;
+    }
+    repeated ResourceCharacteristic resourceCharacteristic = 19 ;
+
+    // ResourceSpecification of the LogicalResourceMessage task 
+   repeated string resourceSpecification = 20  ;
+    
+   // ProductOffering of the LogicalResourceMessage task 
+ repeated string productOffering = 21 ;
+
+  // ResourceRelationship of the LogicalResourceMessage task 
+    message ResourceRelationship{
+        enum RelationshipType {
+            reliesOn = 1;
+            bundle = 2;
+            dependency = 3;
+            starterPack =4;
+            capacity=5;
+            pool=6;
+        }
+        string relationshipType = 1;
+        message ValidFor{
+            string startDateTime = 1;
+            string endDateTime = 2;
+          }
+          ValidFor validFor = 2 [json_name = "validFor"];
+          message Resource{
+            string id = 1;
+          }
+          Resource resource = 3 [json_name = "resource"];
+    }
+    repeated ResourceRelationship resourceRelationship = 29 ;
+
+    //BundledResources of the LogicalResourceMessage task 
+    message BundledResources {
+        string id=1;
+        string href=2;
+        string type = 3 [json_name = "@type"];
+        string baseType = 4 [json_name = "@baseType"];
+        string schemaLocation = 5 [json_name = "@schemaLocation"];
+    }
+    repeated BundledResources bundledResources = 22;
+}
+
+// Taks we have to do
+message LogicalResourceMessage{
+    // Unique identifier of the LogicalResourceMessage task 
+    string id = 1;
+
+    // href of the LogicalResourceMessage task  
+    string href = 2;
+
+    // description of the LogicalResourceMessage task 
+    string description = 3;
+
+    // name of of the LogicalResourceMessage task 
+    string name = 4;
+
+    // resourceVersion of the LogicalResourceMessage task 
+    int64 resourceVersion = 5;
+
+    // @type of the LogicalResourceMessage task 
+    string type = 6[json_name = "@type"];
+
+    // @baseType of the LogicalResourceMessage task 
+    string baseType = 7[json_name = "@baseType"];
+
+    // @schemaLocation of the LogicalResourceMessage task 
+    string schemaLocation = 8[json_name = "@schemaLocation"];
+
+    // isBundle of the LogicalResourceMessage task 
+    bool isBundle = 28 ;
+
+    // resourceAccess of the LogicalResourceMessage task 
+    string resourceAccess = 32[ json_name = "resourceAccess"];
+
+    // isMNP of the LogicalResourceMessage task 
+    bool isMNP = 30 ;
+
+    // startOperatingDate of the LogicalResourceMessage task 
+    string startOperatingDate = 9[ json_name = "startOperatingDate"];
+
+    // endOperatingDate of the LogicalResourceMessage task  
+    string endOperatingDate = 10;
+
+    // resourceRecycleDate of the LogicalResourceMessage task 
+    string resourceRecycleDate = 31;
+
+    // operationalState of the LogicalResourceMessage task  
+    string operationalState = 11;
+
+    // value of the LogicalResourceMessage task 
+    string value = 27;
+
+    
+    // resourceStatus of the LogicalResourceMessage task  
+    enum ResourceStatus {
+        Created = 1;
+        Available = 2;
+        Reserved = 3;
+        InUse = 4;
+        Retired = 5;
+        Disabled = 6; 
+        Pooled =7;
+        Blocked=8;
+    }
+    string resourceStatus= 26;
+    
+    // BusinessType of the LogicalResourceMessage task  
+    repeated string businessType = 12;
+
+     // Category of the LogicalResourceMessage task 
+     repeated string category = 13;
+
+    // cost of the LogicalResourceMessage task  
+    message Cost{
+        int64 taxFreeValue = 1;
+        int64 taxedValue = 2;
+        string unit = 3;
+    }
+    Cost cost = 14 ;
+
+    // Attachment of the LogicalResourceMessage task  
+    message Attachment{
+        string id = 1 ;
+        string href = 2;
+        string attachmentType = 3;
+        string content = 4;
+        string description = 5;
+        string mimeType = 6;
+        string name = 7;
+        string url = 8;
+        message Size{
+            string amount = 1;
+            string units = 2;
+        }
+        Size size = 9 [json_name = "size"];
+        message ValidFor{
+          string startDateTime = 1;
+          string endDateTime = 2;
+        }
+        ValidFor validFor = 10 [json_name = "validFor"];
+        string baseType = 11[json_name = "@baseType"];
+        string type = 12[json_name = "@type"];
+        string schemaLocation = 13[json_name = "@schemaLocation"];
+        string referredType = 14[json_name = "@referredType"];
+    }
+    repeated Attachment attachment = 15;
+
+    // Note of the LogicalResourceMessage task 
+    message Note{
+        string authorRole = 1;
+        string author = 2;
+        string date = 3;
+        string  text = 4;
+    }
+    repeated Note note = 16  ;
+
+    // place of the LogicalResourceMessage task 
+    repeated string place = 17 ;
+
+    // RelatedParty of the LogicalResourceMessage task 
+    message RelatedParty{
+        string name = 1;
+        string role = 2;
+        string type = 3[json_name = "@type"];
+        string baseType = 4[json_name = "@baseType"];
+    }
+    repeated RelatedParty relatedParty = 18 ;
+
+    // ResourceCharacteristic of the LogicalResourceMessage task 
+    message ResourceCharacteristic{
+        string code = 1;
+        string name = 2;
+        bool publicIdentifier = 3;
+        string value = 4;
+        string valueType = 5;
+    }
+    repeated ResourceCharacteristic resourceCharacteristic = 19 ;
+
+    // ResourceSpecification of the LogicalResourceMessage task 
+   repeated string resourceSpecification = 20  ;
+    
+   // ProductOffering of the LogicalResourceMessage task 
+ repeated string productOffering = 21 ;
+
+  // ResourceRelationship of the LogicalResourceMessage task 
+    message ResourceRelationship{
+        enum RelationshipType {
+            reliesOn = 1;
+            bundle = 2;
+            dependency = 3;
+            starterPack =4;
+            capacity=5;
+            pool=6;
+        }
+        string relationshipType = 1;
+        message ValidFor{
+            string startDateTime = 1;
+            string endDateTime = 2;
+          }
+          ValidFor validFor = 2 [json_name = "validFor"];
+          message Resource{
+            string id = 1;
+          }
+          Resource resource = 3 [json_name = "resource"];
+    }
+    repeated ResourceRelationship resourceRelationship = 29 ;
+
+    //BundledResources of the LogicalResourceMessage task 
+    message BundledResources {
+        string id=1;
+        string href=2;
+        string type = 3 [json_name = "@type"];
+        string baseType = 4 [json_name = "@baseType"];
+        string schemaLocation = 5 [json_name = "@schemaLocation"];
+    }
+    repeated BundledResources bundledResources = 22;
+}
+
+message LogicalResourceMessageForReadAll{
+    // Unique identifier of the LogicalResourceMessage task 
+    string id = 1;
+
+    // href of the LogicalResourceMessage task  
+    string href = 2;
+
+    // description of the LogicalResourceMessage task 
+    string description = 3;
+
+    // name of of the LogicalResourceMessage task 
+    string name = 4;
+
+    // resourceVersion of the LogicalResourceMessage task 
+    int64 resourceVersion = 5;
+
+    // @type of the LogicalResourceMessage task 
+    string type = 6[json_name = "@type"];
+
+    // @baseType of the LogicalResourceMessage task 
+    string baseType = 7[json_name = "@baseType"];
+
+    // @schemaLocation of the LogicalResourceMessage task 
+    string schemaLocation = 8[json_name = "@schemaLocation"];
+
+    // isBundle of the LogicalResourceMessage task 
+    bool isBundle = 28 ;
+
+    // resourceAccess of the LogicalResourceMessage task 
+    string resourceAccess = 32[ json_name = "resourceAccess"];
+
+    // isMNP of the LogicalResourceMessage task 
+    bool isMNP = 30 ;
+
+    // startOperatingDate of the LogicalResourceMessage task 
+    string startOperatingDate = 9[ json_name = "startOperatingDate"];
+
+    // endOperatingDate of the LogicalResourceMessage task  
+    string endOperatingDate = 10;
+
+     // resourceRecycleDate of the LogicalResourceMessage task 
+     string resourceRecycleDate = 31;
+
+    // operationalState of the LogicalResourceMessage task  
+    string operationalState = 11;
+
+    // value of the LogicalResourceMessage task 
+    string value = 27;
+
+    // resourceStatus of the LogicalResourceMessage task  
+    enum ResourceStatus {
+        Created = 1;
+        Available = 2;
+        Reserved = 3;
+        InUse = 4;
+        Retired = 5;
+        Disabled = 6; 
+        Pooled =7;
+        Blocked=8;
+    }
+    string resourceStatus= 26;
+    
+    // BusinessType of the LogicalResourceMessage task  
+    repeated string businessType = 12;
+
+    // Category of the LogicalResourceMessage task 
+    message Category {
+        string id = 1;
+        string name = 2;
+        string href = 3;
+        string version = 4;
+        string code = 5;
+        string description =6;
+    }
+    repeated Category category = 13;
+
+    // cost of the LogicalResourceMessage task  
+    message Cost{
+        int64 taxFreeValue = 1;
+        int64 taxedValue = 2;
+        string unit = 3;
+    }
+    Cost cost = 14 ;
+
+    // Attachment of the LogicalResourceMessage task  
+    message Attachment{
+        string id = 1 ;
+        string href = 2;
+        string attachmentType = 3;
+        string content = 4;
+        string description = 5;
+        string mimeType = 6;
+        string name = 7;
+        string url = 8;
+        message Size{
+            string amount = 1;
+            string units = 2;
+        }
+        Size size = 9 [json_name = "size"];
+        message ValidFor{
+          string startDateTime = 1;
+          string endDateTime = 2;
+        }
+        ValidFor validFor = 10 [json_name = "validFor"];
+        string baseType = 11[json_name = "@baseType"];
+        string type = 12[json_name = "@type"];
+        string schemaLocation = 13[json_name = "@schemaLocation"];
+        string referredType = 14[json_name = "@referredType"];
+    }
+    repeated Attachment attachment = 15;
+
+    // Note of the LogicalResourceMessage task 
+    message Note{
+        string authorRole = 1;
+        string author = 2;
+        string date = 3;
+        string  text = 4;
+    }
+    repeated Note note = 16  ;
+
+    // place of the LogicalResourceMessage task 
+    message Place{
+        string id = 1;
+        string href = 2;
+        string name =3;
+        string version = 4;
+        string schemaLocation = 5[json_name = "@schemaLocation"];
+        string type = 6[json_name = "@type"];
+        string baseType = 7[json_name = "@baseType"];
+        string referredType = 8[json_name = "@referredType"];
+        message GeographicLocation{
+            string name = 1;
+            string geometryType = 2;
+            string accuracy = 3;
+            string spatialRef = 4;
+            message Geometry{
+                string x = 1;
+                string y = 2;
+                string z = 3;
+            }
+            repeated Geometry geometry = 5 ;
+            string schemaLocation = 6[json_name = "@schemaLocation"];
+            string type = 7[json_name = "@type"];
+            string baseType = 8[json_name = "@baseType"];
+        }
+        repeated GeographicLocation geographicLocation = 9 ;
+        }
+     repeated Place place = 17 ;
+
+    // RelatedParty of the LogicalResourceMessage task 
+    message RelatedParty{
+        string name = 1;
+        string role = 2;
+        string type = 3[json_name = "@type"];
+        string baseType = 4[json_name = "@baseType"];
+    }
+    repeated RelatedParty relatedParty = 18 ;
+
+    // ResourceCharacteristic of the LogicalResourceMessage task 
+    message ResourceCharacteristic{
+        string code = 1;
+        string name = 2;
+        bool publicIdentifier = 3;
+        string value = 4;
+        string valueType = 5;
+    }
+    repeated ResourceCharacteristic resourceCharacteristic = 19 ;
+
+    // ResourceSpecification of the LogicalResourceMessage task 
+   message ResourceSpecification {
+     string id=1;
+     string href=2;
+     string type = 3 [json_name = "@type"];
+    string baseType = 4 [json_name = "@baseType"];
+    string schemaLocation = 5 [json_name = "@schemaLocation"];
+   }
+   repeated ResourceSpecification resourceSpecification = 20  ;
+    
+   // ProductOffering of the LogicalResourceMessage task 
+   message ProductOffering {
+        string id=1;
+        string href=2;
+        string type = 3 [json_name = "@type"];
+        string baseType = 4 [json_name = "@baseType"];
+        string schemaLocation = 5 [json_name = "@schemaLocation"];
+        string code=6;
+        string name=7;
+    }
+    repeated ProductOffering productOffering = 21 ;
+
+  // ResourceRelationship of the LogicalResourceMessage task 
+    message ResourceRelationship{
+        enum RelationshipType {
+            reliesOn = 1;
+            bundle = 2;
+            dependency = 3;
+            starterPack =4;
+            capacity=5;
+            pool=6;
+        }
+        string relationshipType = 1;
+        message ValidFor{
+            string startDateTime = 1;
+            string endDateTime = 2;
+          }
+          ValidFor validFor = 2 [json_name = "validFor"];
+          message Resource{
+            string id = 1;
+          }
+          Resource resource = 3 [json_name = "resource"];
+    }
+    repeated ResourceRelationship resourceRelationship = 29 ;
+
+    //BundledResources of the LogicalResourceMessage task 
+    message BundledResources {
+        string id=1;
+        string href=2;
+        string type = 3 [json_name = "@type"];
+        string baseType = 4 [json_name = "@baseType"];
+        string schemaLocation = 5 [json_name = "@schemaLocation"];
+    }
+    repeated BundledResources bundledResources = 22;
+}
+
+
+// Request data to read Service task
+message ReadAllLogicalResourceRequest{
+    // To get selected attributes from DB rather than a full document, add these attributes separated by "," without a space between them
+    // Example: 
+    // resource/{UUID}?fieltds=name,description,state
+    string fields = 2;
+    // You can sort the documents based on one attribute descending by using "-" before the attribute or ascending by just typing the attribute
+    // Example: 
+    // resource/{UUID}?sort=-orderDate Or resource/{UUID}?sort=orderDate
+    string sort = 3;
+    // You can limit the number of fetched documents from DB by using limit keyword. The maximum number is 100!
+    // Example: 
+    // resource?limit=50
+    string limit = 4;
+    // You can skip some documents when reading from DB. It usually used with Limit keyword
+    // Example: 
+    // resource?limit=50&offset=10
+    string offset = 5;
+     // You can fetch documents from DB by using resourceStatus keyword. 
+    // Example: 
+    // resource?resourceStatus=Planning
+    string resourceStatus  = 6;
+     // You can fetch documents from DB by using type keyword. 
+    // Example: 
+    // resource?type=MSISDN
+    string type  = 7;
+
+    // You can fetch documents from DB by using regex keyword. 
+    // Example: 
+    // "regex":"name.regex:^(074)([0-9]{8})$"
+    string regex  = 8;
+
+    // You can fetch documents from DB by using gt keyword. 
+    // Example: 
+    // "gt": "createdAt.gt:2020-12-01T14:18:59.389Z"
+    string gt = 9;
+
+    // You can fetch documents from DB by using gte keyword. 
+    // Example: 
+    // "gte": "createdAt.gte:2020-12-01T18:18:59.389Z"
+    string gte = 10;
+
+    // You can fetch documents from DB by using lt keyword. 
+    // Example: 
+    // "lt": "createdAt.lt:2020-11-26T13:39:40.345Z"
+    string lt = 11;
+
+    // You can fetch documents from DB by using lte keyword. 
+    // Example: 
+    // "lte": "createdAt.lte:2020-11-26T13:39:40.345Z"
+    string lte = 12;
+
+    string place = 13;
+
+    string Query = 14;
+    string resourceSpecification=15;
+    string productOffering=16;
+    string operationalState=17;
+    string value = 18; 
+    string resourceRecycleDate = 19;
+    string endOperatingDate = 20;
+}
+
+// Response data to ReadAll Service task
+message ReadAllLogicalResourceResponse{
+    repeated LogicalResourceMessageForReadAll logicalResource = 1;
+    int64 totalCount =2;
+    int64 appLimit = 3;
+ }
+
+// Request data to Update Service task
+ message UpdateLogicalResourceRequest{
+    LogicalResourceMessage logicalResource = 1;
+}
+
+// Response data to Update Service task
+message UpdateLogicalResourceResponse{
+    LogicalResourceMessage logicalResource = 1;
+}
+
+// Request data to create new Service task
+message CreateLogicalResourceRequest{
+    // Service entity to add
+    LogicalResourceMessage logicalResource = 1;
+}
+
+// Contains data of created Service task
+message CreateLogicalResourceResponse{
+    // return of created LogicalResource
+    string id = 1;
+}
+
+// Request data to patch Service task
+message PatchLogicalResourceRequest{
+    // To fetch a single order from DB using order ID in UUID v4 format
+    // Examaple: 
+    // resource/ce063db6-e717-4da4-aad2-6f44503c1e37
+    string id = 1;
+    string action = 2;
+    PatchLogicalResourceMessage logicalResource = 3;
+}
+
+message PatchByValueLogicalResourceRequest{
+    // To fetch a single order from DB using order ID in UUID v4 format
+    // Examaple: 
+    // resource/ce063db6-e717-4da4-aad2-6f44503c1e37
+    string value = 1;
+    string type = 2;
+    string action = 3;
+    LogicalResourceMessage logicalResource = 4;
+}
+
+// Response data to patch Service task
+message PatchLogicalResourceResponse{
+    // Task entity read by ID
+    LogicalResourceMessage logicalResource = 1;
+}
+
+
+// Request data to read Service task
+message ReadLogicalResourceRequest{
+    // To fetch a single order from DB using order ID in UUID v4 format
+    // Examaple: 
+    // resource/ce063db6-e717-4da4-aad2-6f44503c1e37
+    string id = 1;
+    // To get selected attributes from DB rather than a full document, add these attributes separated by "," without a space between them
+    // Example: 
+    // resource/{UUID}?fieltds=name,description,state
+    string fields = 2;
+    // You can sort the documents based on one attribute descending by using "-" before the attribute or ascending by just typing the attribute
+    // Example: 
+    // resource/{UUID}?sort=-orderDate Or resource/{UUID}?sort=orderDate
+    string sort = 3;
+    
+}
+
+// Contains Service task data specified in by ID request
+message ReadLogicalResourceResponse{
+    // Task entity read by ID
+    LogicalResourceMessageForReadAll logicalResource = 1;
+}
+
+// Get Logical Resource by ID
+message LogicalResourceId {
+    string id = 1;
+}
+
+// 
+message LogicalResourceValue {
+    string value = 1;
+    string type = 2;
+}
+
+// Get response of Delete Logical Resource
+message DeleteLogicalResourceResponse {
+    string result = 1;
+}
+
+// Get Logical Resource by ID
+message GetByValueResponse{
+    repeated LogicalResourceMessageForReadAll logicalResource = 2;
+ }
+
+//Service of LogicalResource 
+service LogicalResource{
+    rpc ReadAll(ReadAllLogicalResourceRequest)returns(ReadAllLogicalResourceResponse){ }
+    rpc Create(CreateLogicalResourceRequest)returns(CreateLogicalResourceResponse){ }
+    rpc Update(UpdateLogicalResourceRequest)returns(UpdateLogicalResourceResponse){ }
+    rpc Patch(PatchLogicalResourceRequest)returns(PatchLogicalResourceResponse){ }
+    rpc Delete(LogicalResourceId)returns(DeleteLogicalResourceResponse){ }
+    rpc ReadById (LogicalResourceId) returns (ReadLogicalResourceResponse) {}
+    rpc GetByValue(LogicalResourceValue)returns(GetByValueResponse){ }
+    rpc DeleteByValue(LogicalResourceValue)returns(DeleteLogicalResourceResponse){ }
+    rpc PatchByValue(PatchByValueLogicalResourceRequest)returns(PatchLogicalResourceResponse){ }
+    rpc PatchByAvailableValue(PatchByValueLogicalResourceRequest)returns(PatchLogicalResourceResponse){ }
+    rpc QueryAndUpdate(PatchLogicalResourceRequest)returns(PatchLogicalResourceResponse){ }
+}
